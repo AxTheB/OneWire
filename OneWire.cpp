@@ -217,6 +217,8 @@ void OneWire::write_bit(uint8_t v)
 		interrupts();
 		delayMicroseconds(5);
 	}
+	DIRECT_MODE_INPUT(reg, mask);
+	delayMicroseconds(5);
 }
 
 //
@@ -234,7 +236,7 @@ uint8_t OneWire::read_bit(void)
 	DIRECT_WRITE_LOW(reg, mask);
 	delayMicroseconds(3);
 	DIRECT_MODE_INPUT(reg, mask);	// let pin float, pull up will raise
-	delayMicroseconds(10);
+	delayMicroseconds(23);  // longer than specs allow
 	r = DIRECT_READ(reg, mask);
 	interrupts();
 	delayMicroseconds(53);
